@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { GraduationCap } from "lucide-react";
+
+// ✅ Import your logo
+import logo from "@/assets/logo.png"; // adjust path if needed
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -21,22 +23,25 @@ const Auth = () => {
       const payload: any = {};
       for (const [key, value] of data.entries()) payload[key] = String(value);
 
-      const url = type === 'login' ? 'http://localhost:3000/api/auth/login' : 'http://localhost:3000/api/auth/signup';
+      const url =
+        type === "login"
+          ? "http://localhost:3000/api/auth/login"
+          : "http://localhost:3000/api/auth/signup";
+
       const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const body = await res.json();
-      if (!res.ok) throw new Error(body.error || 'Authentication failed');
+      if (!res.ok) throw new Error(body.error || "Authentication failed");
 
-      // store token and navigate
-      if (body.token) localStorage.setItem('token', body.token);
-      toast.success(type === 'login' ? 'Welcome back!' : 'Account created successfully!');
-      navigate('/dashboard');
+      if (body.token) localStorage.setItem("token", body.token);
+      toast.success(type === "login" ? "Welcome back!" : "Account created successfully!");
+      navigate("/dashboard");
     } catch (err: any) {
-      toast.error(err.message || 'Something went wrong');
+      toast.error(err.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -45,18 +50,25 @@ const Auth = () => {
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
       <div className="w-full max-w-md">
+        {/* ✅ Clean logo (no background or box) */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl gradient-hero shadow-lg">
-            <GraduationCap className="h-8 w-8 text-primary-foreground" />
-          </div>
+          <img
+            src={logo}
+            alt="LearnSphere Logo"
+            className="mx-auto mb-4 h-24 w-24 object-contain"
+          />
           <h1 className="text-3xl font-bold">Welcome to LearnSphere</h1>
-          <p className="mt-2 text-muted-foreground">Start your learning journey today</p>
+          <p className="mt-2 text-muted-foreground">
+            Start your learning journey today
+          </p>
         </div>
 
         <Card className="shadow-soft">
           <CardHeader>
             <CardTitle>Authentication</CardTitle>
-            <CardDescription>Sign in to your account or create a new one</CardDescription>
+            <CardDescription>
+              Sign in to your account or create a new one
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="w-full">
@@ -64,36 +76,66 @@ const Auth = () => {
                 <TabsTrigger value="login">Login</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
-              
+
+              {/* Login Form */}
               <TabsContent value="login">
                 <form onSubmit={(e) => handleAuth(e, "login")} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="login-email">Email</Label>
-                    <Input id="login-email" name="email" type="email" placeholder="you@example.com" required />
+                    <Input
+                      id="login-email"
+                      name="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="login-password">Password</Label>
-                    <Input id="login-password" name="password" type="password" required />
+                    <Input
+                      id="login-password"
+                      name="password"
+                      type="password"
+                      required
+                    />
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Signing in..." : "Sign In"}
                   </Button>
                 </form>
               </TabsContent>
-              
+
+              {/* Signup Form */}
               <TabsContent value="signup">
                 <form onSubmit={(e) => handleAuth(e, "signup")} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="signup-name">Full Name</Label>
-                    <Input id="signup-name" name="name" type="text" placeholder="John Doe" required />
+                    <Input
+                      id="signup-name"
+                      name="name"
+                      type="text"
+                      placeholder="John Doe"
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="signup-email">Email</Label>
-                    <Input id="signup-email" name="email" type="email" placeholder="you@example.com" required />
+                    <Input
+                      id="signup-email"
+                      name="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="signup-password">Password</Label>
-                    <Input id="signup-password" name="password" type="password" required />
+                    <Input
+                      id="signup-password"
+                      name="password"
+                      type="password"
+                      required
+                    />
                   </div>
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Creating account..." : "Create Account"}

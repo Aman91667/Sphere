@@ -1,7 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, LayoutDashboard, PlusCircle, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, PlusCircle, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
+
+// ✅ Import your logo
+import logo from "@/assets/logo.png"; // adjust path if needed
 
 const Navbar = () => {
   const location = useLocation();
@@ -14,9 +17,7 @@ const Navbar = () => {
     { to: "/quiz-generator", label: "Create Quiz", icon: PlusCircle },
   ];
 
-  // ✅ logout function
   const handleLogout = () => {
-    // You can also clear auth tokens or state here if you’re using localStorage or context
     localStorage.removeItem("token");
     navigate("/auth");
   };
@@ -25,14 +26,17 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60 shadow-soft">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+          {/* ✅ Clean Logo Section */}
           <Link
             to={isAuthenticated ? "/dashboard" : "/"}
             className="flex items-center gap-2 transition-smooth hover:opacity-80"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-hero shadow-glow">
-              <GraduationCap className="h-6 w-6 text-primary-foreground" />
-            </div>
+            {/* Plain logo only */}
+            <img
+              src={logo}
+              alt="LearnSphere Logo"
+              className="h-14 w-14 object-contain"
+            />
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               LearnSphere
             </span>
