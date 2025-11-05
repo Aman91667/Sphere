@@ -5,32 +5,22 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      // your existing aliases
-      '@': path.resolve(__dirname, './src'), // @ -> /src
-      '..': path.resolve(__dirname, './src'),
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+      { find: '..', replacement: path.resolve(__dirname, './src') },
 
-      // Force any import that points to the package's `src/createLucideIcon` to use the compiled ESM file
-      // (some lucide-react releases reference the unbuilt `src/*` paths internally)
-      'lucide-react/src/createLucideIcon': path.resolve(
-        __dirname,
-        'node_modules/lucide-react/dist/esm/createLucideIcon.js'
-      ),
-      // safe extra mapping (sometimes paths differ)
-      'lucide-react/dist/esm/createLucideIcon.js': path.resolve(
-        __dirname,
-        'node_modules/lucide-react/dist/esm/createLucideIcon.js'
-      )
-    },
+      // rewrite lucide-react/src/* -> node_modules/lucide-react/dist/esm/*
+      {
+        find: /^lucide-react\/src\/(.*)$/,
+        replacement: path.resolve(__dirname, 'node_modules/lucide-react/dist/esm') + '/$1'
+      }
+    ]
   },
-
-  // Important for Vercel/SSR builds: bundle lucide-react instead of treating it as external
   ssr: {
-    noExternal: ['lucide-react'],
+    // ensure lucide-react is bundled in SSR builds so Vite doesn't treat it as external
+    noExternal: ['lucide-react']
   },
-
-  // Ensure Vite pre-bundles lucide-react for dev (helps avoid weird resolution)
   optimizeDeps: {
-    include: ['lucide-react'],
-  },
+    include: ['lucide-react']
+  }
 });
