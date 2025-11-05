@@ -33,9 +33,7 @@ const Home = () => {
         <div className="absolute inset-0 gradient-hero opacity-10" />
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl gradient-hero shadow-lg">
-              <GraduationCap className="h-8 w-8 text-primary-foreground" />
-            </div>
+          
             <h1 className="mb-6 text-5xl font-bold md:text-6xl lg:text-7xl">
               Learn Smarter, Not Harder
             </h1>
