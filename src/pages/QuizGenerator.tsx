@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Trash2, Plus, Sparkles, BookOpen, Code, Palette, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
+import API_BASE from "@/lib/api";
 
 interface QuizQuestion {
   id: string;
@@ -64,7 +65,7 @@ const QuizGenerator = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) return; // only fetch if logged in
-        const res = await fetch('http://localhost:3000/api/quiz', {
+  const res = await fetch(`${API_BASE}/api/quiz`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) return;
@@ -143,7 +144,7 @@ const QuizGenerator = () => {
           questions: sanitizedQuestions,
         };
 
-        const res = await fetch('http://localhost:3000/api/quiz/generate', {
+  const res = await fetch(`${API_BASE}/api/quiz/generate`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

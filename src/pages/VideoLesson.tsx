@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { mockVideoLessons } from "@/data/mockData";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import API_BASE from "@/lib/api";
 
 const VideoLesson = () => {
   const { id } = useParams();
@@ -32,8 +33,8 @@ const VideoLesson = () => {
     setAnalyzing(true);
 
     try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3000/api/quiz/analyze', {
+  const token = localStorage.getItem('token');
+  const res = await fetch(`${API_BASE}/api/quiz/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

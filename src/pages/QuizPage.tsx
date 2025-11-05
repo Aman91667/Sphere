@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { mockQuizzes } from "@/data/mockData";
 import { CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import API_BASE from "@/lib/api";
 
 const QuizPage = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const QuizPage = () => {
   useEffect(() => {
     if (!localQuiz && id) {
       setLoading(true);
-      fetch(`http://localhost:3000/api/quiz/${id}`)
+  fetch(`${API_BASE}/api/quiz/${id}`)
         .then((r) => r.json())
         .then((body) => {
           if (body && body.quiz) {
@@ -54,7 +55,7 @@ const QuizPage = () => {
         (async () => {
           try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`http://localhost:3000/api/quiz/${quiz._id}/submit`, {
+            const res = await fetch(`${API_BASE}/api/quiz/${quiz._id}/submit`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

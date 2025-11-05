@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import API_BASE from "@/lib/api";
 
 // ✅ Import your logo
 import logo from "@/assets/logo.png"; // adjust path if needed
@@ -25,8 +26,8 @@ const Auth = () => {
 
       const url =
         type === "login"
-          ? "http://localhost:3000/api/auth/login"
-          : "http://localhost:3000/api/auth/signup";
+          ? `${API_BASE}/api/auth/login`
+          : `${API_BASE}/api/auth/signup`;
 
       const res = await fetch(url, {
         method: "POST",
